@@ -1,0 +1,81 @@
+CREATE TABLE CentrosDeTrabajo (
+    IdCentro INT PRIMARY KEY,
+    NombreCentro VARCHAR(255) NOT NULL
+);
+CREATE TABLE Puestos (
+    IdPuesto INT PRIMARY KEY,
+    NombrePuesto VARCHAR(255) NOT NULL,
+    DescripcionPuesto VARCHAR(255)
+);
+CREATE TABLE Directivos (
+    IdDirectivo INT PRIMARY KEY,
+    NombreDirectivo VARCHAR(50)
+);
+CREATE TABLE Empleados (
+    NumeroEmpleado INT PRIMARY KEY,
+    Nombre VARCHAR(255) NOT NULL,
+    ApellidoPaterno VARCHAR(255) NOT NULL,
+    ApellidoMaterno VARCHAR(255) NOT NULL,
+    FechaNacimiento DATE,
+    RFC VARCHAR(13) UNIQUE NOT NULL,
+    CentroDeTrabajo INT,
+    Puesto INT,
+    Directivo INT,
+    FOREIGN KEY (CentroDeTrabajo) REFERENCES CentrosDeTrabajo(IdCentro),
+    FOREIGN KEY (Puesto) REFERENCES Puestos(IdPuesto),
+    FOREIGN KEY (Directivo) REFERENCES Directivos(IdDirectivo)
+);
+-- Insertar datos en CentrosDeTrabajo
+INSERT INTO CentrosDeTrabajo (IdCentro, NombreCentro) VALUES
+(1, 'Oficina Central'),
+(2, 'Sucursal Norte');
+
+-- Insertar datos en Puestos
+INSERT INTO Puestos (IdPuesto, NombrePuesto, DescripcionPuesto) VALUES
+(1, 'Gerente de Recursos Humanos', 'Responsable de RRHH'),
+(2, 'Asistente Administrativa', 'Asistente administrativa'),
+(3, 'Jefe de Finanzas', 'Responsable de finanzas'),
+(4, 'Contador', 'Manejo de contabilidad'),
+(5, 'Gerente de Ventas', 'Responsable de ventas'),
+(6, 'Representante de Ventas', 'Ejecutivo de ventas'),
+(7, 'Gerente de Tecnología', 'Responsable de tecnología');
+
+-- Insertar datos en Directivos
+INSERT INTO Directivos (IdDirectivo, NombreDirectivo) VALUES
+(1, 'Sí'),
+(2, 'No');
+
+-- Insertar datos en Empleados
+INSERT INTO Empleados (NumeroEmpleado, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, RFC, CentroDeTrabajo, Puesto, Directivo) VALUES
+(1, 'Juan', 'Pérez', 'García', '1990-01-01', 'PEGJ900101123', 1, 1, 1),
+(2, 'Ana', 'Gómez', 'Hernández', '1992-02-02', 'GOHJ920202456', 1, 2, 2),
+(3, 'Carlos', 'Ramírez', 'López', '1985-03-03', 'RALC850303789', 1, 3, 1),
+(4, 'María', 'Rodríguez', 'Martínez', '1988-04-04', 'ROMM880404012', 1, 4, 2),
+(5, 'José Luis', 'González', 'Díaz', '1980-05-05', 'GODJ800505345', 2, 5, 1),
+(6, 'Elena', 'Sánchez', 'García', '1995-06-06', 'SAGE950606678', 2, 6, 2),
+(7, 'Ricardo', 'Martínez', 'Torres', '1982-07-07', 'MATJ820707901', 1, 7, 1);
+
+select * from CentrosDeTrabajo
+select * from Puestos
+select * from Directivos
+select * from Empleados
+
+SELECT
+    e.NumeroEmpleado,
+    e.Nombre,
+    e.ApellidoPaterno,
+    e.ApellidoMaterno,
+    e.FechaNacimiento,
+    e.RFC,
+    ct.NombreCentro AS CentroDeTrabajo,
+    p.NombrePuesto AS Puesto,
+    p.DescripcionPuesto,
+    d.NombreDirectivo AS EsDirectivo
+FROM
+    Empleados AS e  -- Alias para la tabla Empleados
+JOIN
+    CentrosDeTrabajo AS ct ON e.CentroDeTrabajo = ct.IdCentro  -- Unir con la tabla de Centros de Trabajo
+JOIN
+    Puestos AS p ON e.Puesto = p.IdPuesto  -- Unir con la tabla de Puestos
+JOIN
+    Directivos AS d ON e.Directivo = d.IdDirectivo; -- Unir con la tabla de Directivos
