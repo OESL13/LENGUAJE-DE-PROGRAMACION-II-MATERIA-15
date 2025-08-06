@@ -1,0 +1,19 @@
+// Programa de ejemplo en c++ 
+
+// Author: Oscar Esteban Sánchez Leyva
+
+// Fecha: 06/08/2025 
+
+#include <iostream> 
+
+int main() 
+
+{ 
+
+std::cout << "Hola mundo"; 
+
+std::cin.get(); 
+
+return 0; 
+
+}
