@@ -1,0 +1,18 @@
+SELECT 
+    e.NumeroEmpleado,
+    e.Nombre,
+    e.ApellidoPaterno,
+    e.ApellidoMaterno,
+    e.FechaNacimiento,
+    e.RFC,
+    c.NombreCentro AS CentroDeTrabajo,
+    p.NombrePuesto,
+    p.DescripcionPuesto,
+    d.NombreDirectivo
+FROM Empleados e
+INNER JOIN CentrosDeTrabajo c 
+    ON e.CentroDeTrabajo = c.IdCentro
+INNER JOIN Puestos p 
+    ON e.Puesto = p.IdPuesto
+INNER JOIN Directivos d 
+    ON e.Directivo = d.IdDirectivo;
